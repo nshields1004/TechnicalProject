@@ -1,0 +1,30 @@
+<h1>Players</h1>
+
+<p *ngIf="!(players$ | async)"><em>Loading...</em></p>
+<p>
+  <a [routerLink]="['/add']" class="btn btn-primary float-right mb-3">New post</a>
+</p>
+
+<table class="table table-sm table-hover" *ngIf="(players$ | async)?.length>0">
+  <thead>
+    <tr>
+      <th></th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Date Of Birth</th>
+      <th>Player Position</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let players of (players$ | async)">
+      <td><img style="width:50px;height:50px;border-radius:50px;" src="assets/playerprofiles/{{players.avatarImg}}.jpeg"></td>
+      <td><a [routerLink]="['/players/', players.id]">{{ players.firstName }}</a></td>
+      <td>{{ players.lastName }}</td>
+      <td>{{ players.dateOfBirth | date: "dd.MM.y" }}</td>
+      <td>{{ players.playerPosition }}</td>
+      <td><a [routerLink]="['/players/edit/', players.id]" class="btn btn-primary btn-sm float-right">Edit</a></td>
+      <td><a [routerLink]="" (click)="delete(players.id)" class="btn btn-danger btn-sm float-right">Delete</a></td>
+    </tr>
+  </tbody>
+</table>
